@@ -1,6 +1,5 @@
 package net.javacoding.jspider.core.util;
-
-
+import java.nio.charset.Charset;
 /**
  * This class is derived from the one found in the JavaWorld.com article
  * http://www.javaworld.com/javaworld/javatips/jw-javatip36-p2.html
@@ -10,12 +9,15 @@ package net.javacoding.jspider.core.util;
  */
 public abstract class Base64Encoder {
 
+    public static Charset charset=Charset.forName("UTF-8");
+
     public final static String base64Encode(String strInput) {
         if (strInput == null) return null;
 
         byte byteData[] = new byte[strInput.length()];
-        byteData = strInput.getBytes();
-        return new String(base64Encode(byteData));
+        byteData = strInput.getBytes(charset);
+
+        return new String(base64Encode(byteData),charset);
     }
 
     public final static byte[] base64Encode(byte[] byteData) {

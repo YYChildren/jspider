@@ -99,7 +99,7 @@ public class WorkerThreadPool extends ThreadGroup {
         int counter = 0;
         for (int i = 0; i < poolSize; i++) {
             WorkerThread thread = pool[i];
-            if (thread.getState() == WorkerThread.WORKERTHREAD_BLOCKED ) {
+            if (thread.getSubState() == WorkerThread.WORKERTHREAD_BLOCKED ) {
                 counter++;
             }
         }
@@ -110,7 +110,7 @@ public class WorkerThreadPool extends ThreadGroup {
         int counter = 0;
         for (int i = 0; i < poolSize; i++) {
             WorkerThread thread = pool[i];
-            if (thread.getState() == WorkerThread.WORKERTHREAD_BUSY) {
+            if (thread.getSubState() == WorkerThread.WORKERTHREAD_BUSY) {
                 counter++;
             }
         }
@@ -121,7 +121,7 @@ public class WorkerThreadPool extends ThreadGroup {
         int counter = 0;
         for (int i = 0; i < poolSize; i++) {
             WorkerThread thread = pool[i];
-            if (thread.getState() == WorkerThread.WORKERTHREAD_IDLE ) {
+            if (thread.getSubState() == WorkerThread.WORKERTHREAD_IDLE ) {
                 counter++;
             }
         }

@@ -106,7 +106,7 @@ class WorkerThread extends Thread {
      * Returns the state of this worker thread (idle, blocked or busy).
      * @return
      */
-    public int getState ( ) {
+    public int getSubState ( ) {
         return state;
     }
 

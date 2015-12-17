@@ -106,7 +106,7 @@ public class WorkerThreadTest extends TestCase {
     }
 
     public void testInitialState ( ) {
-        int state = thread.getState();
+        int state = thread.getSubState();
         int expected = WorkerThread.WORKERTHREAD_IDLE;
         assertEquals ( "newly created thread reports another state than IDLE", expected, state);
     }
@@ -122,7 +122,7 @@ public class WorkerThreadTest extends TestCase {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-        int state = thread.getState();
+        int state = thread.getSubState();
         int expected = WorkerThread.WORKERTHREAD_BLOCKED;
         assertEquals ( "thread waiting in prepare() did report another state than BLOCKED", expected, state);
     }
@@ -134,7 +134,7 @@ public class WorkerThreadTest extends TestCase {
         sleep();
         thread.assign(task);
         sleep();
-        int state = thread.getState();
+        int state = thread.getSubState();
         int expected = WorkerThread.WORKERTHREAD_BUSY;
         assertEquals ( "thread waiting in execute() did report another state than BUSY", expected, state);
     }
@@ -146,7 +146,7 @@ public class WorkerThreadTest extends TestCase {
         sleep();
         thread.assign(task);
         sleep();
-        int state = thread.getState();
+        int state = thread.getSubState();
         int expected = WorkerThread.WORKERTHREAD_IDLE;
         assertEquals ( "thread that should have completed it's job reported another state than IDLE", expected, state);
     }
