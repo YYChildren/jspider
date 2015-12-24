@@ -160,12 +160,32 @@
 
   <!-- == BUILD ============================================================ -->
   <target name="build" depends="init">
+    <!-- copy the main source tree while filtering -->
+    <mkdir dir="${folder.stage.src}"/>
+    <mkdir dir="${folder.stage.src.main}"/>
+    <copy todir="${folder.stage.src.main}">
+        <fileset dir="${folder.src.main}"/>
+        <filterset>
+          <filterset refid="filterset.src"/>
+          <filter token="build.DSTAMP" value="${build.DSTAMP}"/>
+        </filterset>
+    </copy>
+
+    <!-- copy the test source tree while filtering -->
+    <mkdir dir="${folder.stage.src.test}"/>
+    <copy todir="${folder.stage.src.test}">
+        <fileset dir="${folder.src.test}"/>
+        <filterset>
+          <filterset refid="filterset.src"/>
+          <filter token="build.DSTAMP" value="${build.DSTAMP}"/>
+        </filterset>
+    </copy>
     
     <!-- compile main source tree to the stage.compiled.main folder -->
     <mkdir dir="${folder.stage}" />
     <mkdir dir="${folder.stage.compiled}" />
     <mkdir dir="${folder.stage.compiled.main}"/>
-    <javac srcdir="${folder.src.main}"
+    <javac srcdir="${folder.stage.src.main}"
            destdir="${folder.stage.compiled.main}"
            includeAntRuntime="false">
       <classpath refid="path.classpath.compile.main"/>
@@ -173,7 +193,7 @@
 
     <!-- compile test source tree to the stage.compiled.main folder -->
     <mkdir dir="${folder.stage.compiled.test}"/>
-    <javac srcdir="${folder.src.test}"
+    <javac srcdir="${folder.stage.src.test}"
            destdir="${folder.stage.compiled.test}"
            includeAntRuntime="false">
       <classpath refid="path.classpath.compile.test"/>
@@ -432,7 +452,7 @@
   <!-- == Generate API Docs ================================================ -->
   <target name="generateAPIDocs">
     <mkdir dir="${folder.stage.doc.api}"/>
-    <javadoc sourcepath="${folder.src.main}"
+    <javadoc sourcepath="${folder.stage.src.main}"
              packagenames="**/**"
              destdir="${folder.stage.doc.api}"
              author="true"/>
@@ -447,7 +467,7 @@
        classpathref="path.dependency.xdoclet"
     />
     <document destdir="${folder.stage.doc.todo}">
-      <fileset dir="${folder.src.main}">
+      <fileset dir="${folder.stage.src.main}">
         <include name="**/*.java"/>
       </fileset>
       <fileset dir="${folder.src.test}">
