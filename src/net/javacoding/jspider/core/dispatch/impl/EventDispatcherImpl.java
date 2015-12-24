@@ -16,7 +16,7 @@ import net.javacoding.jspider.mod.eventfilter.AllowAllEventFilter;
  *
  * $Id: EventDispatcherImpl.java,v 1.11 2003/04/22 16:43:33 vanrogu Exp $
  *
- * @author Günther Van Roey
+ * @author Gï¿½nther Van Roey
  */
 public class EventDispatcherImpl implements EventDispatcher {
 
@@ -57,9 +57,9 @@ public class EventDispatcherImpl implements EventDispatcher {
 
         if (filter) {
 
-            Class engineEventFilterClass = props.getClass(ConfigConstants.FILTER_ENGINE, AllowAllEventFilter.class);
-            Class monitorEventFilterClass = props.getClass(ConfigConstants.FILTER_MONITORING, AllowAllEventFilter.class);
-            Class spiderEventFilterClass = props.getClass(ConfigConstants.FILTER_SPIDER, AllowAllEventFilter.class);
+            Class<?> engineEventFilterClass = props.getClass(ConfigConstants.FILTER_ENGINE, AllowAllEventFilter.class);
+            Class<?> monitorEventFilterClass = props.getClass(ConfigConstants.FILTER_MONITORING, AllowAllEventFilter.class);
+            Class<?> spiderEventFilterClass = props.getClass(ConfigConstants.FILTER_SPIDER, AllowAllEventFilter.class);
             log.debug("EventFilter for engine events = " + engineEventFilterClass.getName());
             log.debug("EventFilter for monitor events = " + monitorEventFilterClass.getName());
             log.debug("EventFilter for spider events = " + spiderEventFilterClass.getName());

@@ -12,7 +12,7 @@ import net.javacoding.jspider.core.util.config.*;
  *
  * $Id: StorageFactory.java,v 1.7 2003/04/11 16:37:05 vanrogu Exp $
  *
- * @author Günther Van Roey
+ * @author Gï¿½nther Van Roey
  */
 public class StorageFactory {
 
@@ -24,7 +24,7 @@ public class StorageFactory {
         Log log = LogFactory.getLog(StorageFactory.class);
 
         PropertySet storageProps = new MappedPropertySet ( ConfigConstants.CONFIG_STORAGE, props );
-        Class providerClass = storageProps.getClass(ConfigConstants.CONFIG_STORAGE_PROVIDER, InMemoryStorageProvider.class);
+        Class<?> providerClass = storageProps.getClass(ConfigConstants.CONFIG_STORAGE_PROVIDER, InMemoryStorageProvider.class);
         log.info("Storage provider class is '" + providerClass + "'");
 
         try {

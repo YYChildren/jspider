@@ -37,7 +37,7 @@ import java.util.Map;
  *
  * $Id: SpiderContextImpl.java,v 1.32 2003/04/10 16:19:05 vanrogu Exp $
  *
- * @author Günther Van Roey
+ * @author Gï¿½nther Van Roey
  */
 public class SpiderContextImpl implements SpiderContext {
 
@@ -45,10 +45,10 @@ public class SpiderContextImpl implements SpiderContext {
     protected URL baseURL;
     protected EventDispatcher eventDispatcher;
     protected ThrottleFactory throttleFactory;
-    protected Map throttles;
-    protected Map spiderRules;
-    protected Map parserRules;
-    protected Map robotsTXTRules;
+    protected Map<String, Throttle> throttles;
+    protected Map<Site, Ruleset> spiderRules;
+    protected Map<Site, Ruleset> parserRules;
+    protected Map<Site, BaseRuleImpl> robotsTXTRules;
     protected Storage storage;
     protected CookieUtil cookieUtil;
     protected String authenticationString;
@@ -65,10 +65,10 @@ public class SpiderContextImpl implements SpiderContext {
         this.throttleFactory = throttleFactory;
         this.storage = storage;
         this.cookieUtil = new CookieUtil();
-        this.throttles = new HashMap();
-        this.spiderRules = new HashMap ( );
-        this.parserRules = new HashMap ( );
-        this.robotsTXTRules = new HashMap ( );
+        this.throttles = new HashMap<String, Throttle>();
+        this.spiderRules = new HashMap<Site, Ruleset> ( );
+        this.parserRules = new HashMap<Site, Ruleset> ( );
+        this.robotsTXTRules = new HashMap<Site, BaseRuleImpl> ( );
         this.generalSpiderRules = RuleFactory.createGeneralSpiderRules();
         this.generalParserRules = RuleFactory.createGeneralParserRules();
         this.log = LogFactory.getLog(SpiderContext.class);

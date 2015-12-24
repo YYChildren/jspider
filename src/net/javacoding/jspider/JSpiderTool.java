@@ -20,7 +20,7 @@ public class JSpiderTool {
     JSpiderTool(String url, Flags flags, Parameters params, Tool tool) {
         this.flags = flags;
         this.params = params;
-        this.tool = tool;
+        JSpiderTool.tool = tool;
         this.url = url;
     }
 
@@ -30,8 +30,7 @@ public class JSpiderTool {
         jspider.start();
     }
 
-
-    public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {
 
         if (args.length < 2) {
 

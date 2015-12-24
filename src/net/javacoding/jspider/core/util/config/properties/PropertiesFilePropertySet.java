@@ -1,8 +1,6 @@
 package net.javacoding.jspider.core.util.config.properties;
 
 import net.javacoding.jspider.core.util.config.PropertySet;
-import net.javacoding.jspider.core.logging.LogFactory;
-import net.javacoding.jspider.core.logging.Log;
 
 import java.io.*;
 import java.util.*;
@@ -12,7 +10,7 @@ import java.util.*;
  */
 public class PropertiesFilePropertySet implements PropertySet {
 
-    protected static HashMap instances = new HashMap();
+    protected static HashMap<String,PropertySet> instances = new HashMap<String, PropertySet>();
     protected ResourceBundle props;
     protected String fileName;
 
@@ -45,7 +43,8 @@ public class PropertiesFilePropertySet implements PropertySet {
         return value;
     }
 
-    public Class getClass(String name, Class defaultValue) {
+    @SuppressWarnings("rawtypes")
+	public Class getClass(String name, Class defaultValue) {
         String className = null;
         if ( defaultValue == null ) {
           className = getString(name, name);

@@ -11,7 +11,7 @@ import net.javacoding.jspider.core.task.WorkerTask;
  *
  * $Id: WorkerThreadPool.java,v 1.7 2003/02/27 16:47:49 vanrogu Exp $
  *
- * @author Günther Van Roey
+ * @author Gï¿½nther Van Roey
  */
 public class WorkerThreadPool extends ThreadGroup {
 

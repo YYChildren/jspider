@@ -21,7 +21,7 @@ import net.javacoding.jspider.core.util.config.*;
  *
  * $Id: ThrottleFactory.java,v 1.9 2003/04/03 15:57:19 vanrogu Exp $
  *
- * @author Günther Van Roey
+ * @author Gï¿½nther Van Roey
  */
 public class ThrottleFactory {
 
@@ -33,7 +33,7 @@ public class ThrottleFactory {
     public Throttle createThrottle(Site site) {
         PropertySet props = ConfigurationFactory.getConfiguration().getSiteConfiguration(site);
         PropertySet throttleProps = new MappedPropertySet ( ConfigConstants.SITE_THROTTLE, props );
-        Class providerClass = throttleProps.getClass(ConfigConstants.SITE_THROTTLE_PROVIDER, DistributedLoadThrottleProvider.class);
+        Class<?> providerClass = throttleProps.getClass(ConfigConstants.SITE_THROTTLE_PROVIDER, DistributedLoadThrottleProvider.class);
         Log log = LogFactory.getLog(ThrottleFactory.class);
         log.info("Throttle provider class is '" + providerClass + "'");
 
