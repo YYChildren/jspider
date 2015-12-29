@@ -10,11 +10,11 @@ import java.util.HashMap;
 public class OverridingPropertySet implements PropertySet {
 
     protected PropertySet props;
-    protected HashMap overridden;
+    protected HashMap<String,Object> overridden;
 
     public OverridingPropertySet ( PropertySet props ) {
         this.props = props;
-        this.overridden = new HashMap ( );
+        this.overridden = new HashMap<String, Object> ( );
     }
 
     public void setValue ( String name, Object value ) {
@@ -29,7 +29,8 @@ public class OverridingPropertySet implements PropertySet {
         }
     }
 
-    public Class getClass(String name, Class defaultValue) {
+    @SuppressWarnings("rawtypes")
+	public Class getClass(String name, Class defaultValue) {
         if ( overridden.containsKey(name) ) {
             return (Class)overridden.get(name);
         } else {

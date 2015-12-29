@@ -18,7 +18,7 @@ import java.lang.reflect.InvocationTargetException;
  *
  * $Id: RuleFactory.java,v 1.12 2003/04/29 17:53:48 vanrogu Exp $
  *
- * @author Günther Van Roey
+ * @author Gï¿½nther Van Roey
  */
 public class RuleFactory {
 
@@ -62,26 +62,18 @@ public class RuleFactory {
 
         Log log = LogFactory.getLog(RuleFactory.class);
 
-        List rules = new ArrayList();
+        List<Rule> rules = new ArrayList<Rule>();
 
         for (int i = 0; i < rulesCount; i++) {
             String prefix = purpose + "." + (i + 1);
             PropertySet ruleProps = new MappedPropertySet(prefix, rulesProps);
-            Class ruleClass = ruleProps.getClass(ConfigConstants.RULE_CLASS, null);
+            Class<?> ruleClass = ruleProps.getClass(ConfigConstants.RULE_CLASS, null);
             Rule rule = null;
 
             if (ruleClass != null) {
-
                 try {
-                    Class[] paramTypes = new Class[1];
-                    paramTypes[0] = PropertySet.class;
-
-                    Object params[] = new Object[1];
-                    params[0] = new MappedPropertySet ( ConfigConstants.RULE_CONFIG, ruleProps);
-
-                    Constructor constructor = ruleClass.getDeclaredConstructor(paramTypes);
-                    rule = (Rule) constructor.newInstance(params);
-
+                    Constructor<?> constructor = ruleClass.getDeclaredConstructor(PropertySet.class);
+                    rule = (Rule) constructor.newInstance(new MappedPropertySet ( ConfigConstants.RULE_CONFIG, ruleProps));
                 } catch (NoSuchMethodException e) {
                     log.debug("rule " + ruleClass.getName() + " hasn't got a config-param constructor");
                 } catch (SecurityException e) {

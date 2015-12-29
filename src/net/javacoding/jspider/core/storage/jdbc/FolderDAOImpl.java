@@ -32,7 +32,7 @@ class FolderDAOImpl implements FolderDAOSPI {
     }
 
     public FolderInternal[] findSiteRootFolders(SiteInternal site) {
-        ArrayList al = new ArrayList ();
+        ArrayList<FolderInternal> al = new ArrayList<FolderInternal> ();
 
         Statement st = null;
         ResultSet rs = null;
@@ -53,7 +53,7 @@ class FolderDAOImpl implements FolderDAOSPI {
     }
 
     public FolderInternal[] findSubFolders(FolderInternal folder) {
-        ArrayList al = new ArrayList ( );
+        ArrayList<FolderInternal> al = new ArrayList<FolderInternal> ( );
 
         Statement st = null;
         ResultSet rs = null;

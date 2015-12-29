@@ -19,7 +19,7 @@ public class SchedulerFactory {
 
         PropertySet props = ConfigurationFactory.getConfiguration().getJSpiderConfiguration();
         PropertySet schedulerProps = new MappedPropertySet ( ConfigConstants.CONFIG_SCHEDULER, props);
-        Class providerClass = schedulerProps.getClass(ConfigConstants.CONFIG_SCHEDULER_PROVIDER, DefaultSchedulerProvider.class);
+        Class<?> providerClass = schedulerProps.getClass(ConfigConstants.CONFIG_SCHEDULER_PROVIDER, DefaultSchedulerProvider.class);
         Log log = LogFactory.getLog(SchedulerFactory.class);
         log.info("TaskScheduler provider class is '" + providerClass + "'");
 

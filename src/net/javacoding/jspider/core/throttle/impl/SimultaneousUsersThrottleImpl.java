@@ -17,12 +17,12 @@ import java.util.Map;
  *
  * $Id: SimultaneousUsersThrottleImpl.java,v 1.3 2003/02/27 16:47:51 vanrogu Exp $
  *
- * @author  Günther Van Roey
+ * @author  Gï¿½nther Van Roey
  */
 public class SimultaneousUsersThrottleImpl implements Throttle {
 
     /** Map which contains the last fetch times per worker thread (user). */
-    protected Map lastAllows;
+    protected Map<Thread, Long> lastAllows;
 
     /** configured minimum value of thinking time. */
     protected int min;
@@ -39,7 +39,7 @@ public class SimultaneousUsersThrottleImpl implements Throttle {
     public SimultaneousUsersThrottleImpl ( int minThinkTime, int maxThinkTime ) {
         this.min = minThinkTime;
         this.max = maxThinkTime;
-        this.lastAllows = new HashMap();
+        this.lastAllows = new HashMap<Thread, Long>();
     }
 
     /**

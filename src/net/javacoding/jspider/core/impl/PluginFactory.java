@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * $Id: PluginFactory.java,v 1.9 2003/04/22 16:43:34 vanrogu Exp $
  *
- * @author Günther Van Roey
+ * @author Gï¿½nther Van Roey
  */
 public class PluginFactory {
 
@@ -26,7 +26,7 @@ public class PluginFactory {
     public Plugin[] createPlugins() {
 
         Log log = LogFactory.getLog(PluginFactory.class);
-        ArrayList loadedPlugins = new ArrayList();
+        ArrayList<Plugin> loadedPlugins = new ArrayList<Plugin>();
 
         PropertySet props = ConfigurationFactory.getConfiguration().getPluginsConfiguration();
         PropertySet pluginsProps = new MappedPropertySet(ConfigConstants.PLUGINS,props);
@@ -39,7 +39,7 @@ public class PluginFactory {
                 log.info("Loading plugin configuration '" + pluginInstance + "'...");
                 PropertySet config = ConfigurationFactory.getConfiguration().getPluginConfiguration(pluginInstance);
                 PropertySet pluginConfig = new MappedPropertySet(ConfigConstants.PLUGIN, config);
-                Class pluginClass = pluginConfig.getClass(ConfigConstants.PLUGIN_CLASS, null);
+                Class<?> pluginClass = pluginConfig.getClass(ConfigConstants.PLUGIN_CLASS, null);
                 if (pluginClass == null) {
                     log.info("Plugin class '" + pluginConfig.getString(ConfigConstants.PLUGIN_CLASS, "") + "' not found");
                 } else {

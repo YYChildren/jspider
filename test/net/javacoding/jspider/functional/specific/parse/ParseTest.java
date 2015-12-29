@@ -131,7 +131,7 @@ public class ParseTest extends TestCase {
         testEventCount(net.javacoding.jspider.api.event.resource.ResourceParsedEvent.class,1);
     }
 
-    protected void testEventCount ( Class eventClass, int expectedCount  ) {
+    protected void testEventCount ( Class<?> eventClass, int expectedCount  ) {
         assertEquals(eventClass.getName(), expectedCount, sink.getEventCount(eventClass));
     }
 

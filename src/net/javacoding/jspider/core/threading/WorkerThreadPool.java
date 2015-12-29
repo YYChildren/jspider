@@ -1,6 +1,12 @@
 package net.javacoding.jspider.core.threading;
 
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import net.javacoding.jspider.core.task.DispatcherTask;
 import net.javacoding.jspider.core.task.WorkerTask;
 
@@ -19,10 +25,13 @@ public class WorkerThreadPool extends ThreadGroup {
     protected DispatcherThread dispatcherThread;
 
     /** Array of threads in the pool. */
-    protected WorkerThread[] pool;
+    //protected WorkerThread[] pool;
+    protected ThreadPoolExecutor pool;
 
     /** Size of the pool. */
     protected int poolSize;
+    
+    
 
     /**
      * Public constructor
@@ -32,23 +41,30 @@ public class WorkerThreadPool extends ThreadGroup {
      */
     public WorkerThreadPool(String poolName, String threadName, int poolSize) {
         super(poolName);
-
         this.poolSize = poolSize;
-
         dispatcherThread = new DispatcherThread(this, threadName + " dispatcher", this);
-        pool = new WorkerThread[poolSize];
-        for (int i = 0; i < poolSize; i++) {
-            pool[i] = new WorkerThread(this, threadName, i);
-            synchronized (this) {
-                try {
-                    pool[i].start();
-                    wait();
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            }
+        ThreadFactory threadFactory = new WorkerThreadFactory(this,threadName);
+		pool = (ThreadPoolExecutor) Executors.newFixedThreadPool(poolSize, threadFactory);
+    }
+    
+    class WorkerThreadFactory implements ThreadFactory {
+        private final ThreadGroup group;
+        private final AtomicInteger threadNumber = new AtomicInteger(1);
+        private final String namePrefix;
+        WorkerThreadFactory(ThreadGroup group,String threadName) {
+        	this.group= group;
+            this.namePrefix = threadName+" ";
+        }
+        public Thread newThread(Runnable r) {
+            Thread t = new Thread(group, r,namePrefix + threadNumber.getAndIncrement(),0);
+            if (t.isDaemon())
+                t.setDaemon(false);
+            if (t.getPriority() != Thread.NORM_PRIORITY)
+                t.setPriority(Thread.NORM_PRIORITY);
+            return t;
         }
     }
+    
 
     /**
      * Assigns a worker task to the pool.  The threadPool will select a worker
@@ -57,12 +73,10 @@ public class WorkerThreadPool extends ThreadGroup {
      */
     public synchronized void assign(WorkerTask task) {
         while (true) {
-            for (int i = 0; i < poolSize; i++) {
-                if (pool[i].isAvailable()) {
-                    pool[i].assign(task);
-                    return;
-                }
-            }
+        	if(pool.getActiveCount() < poolSize){
+        		pool.execute(task);
+        		return;
+        	}
             try {
                 wait();
             } catch (InterruptedException e) {
@@ -84,58 +98,24 @@ public class WorkerThreadPool extends ThreadGroup {
      * Returns the percentage of worker threads that are busy.
      * @return int value representing the percentage of busy workers
      */
-    public int getOccupation() {
-        int occupied = 0;
-        for (int i = 0; i < poolSize; i++) {
-            WorkerThread thread = pool[i];
-            if (thread.isOccupied()) {
-                occupied++;
-            }
-        }
-        return (occupied * 100) / poolSize;
-    }
-
-    public int getBlockedPercentage() {
-        int counter = 0;
-        for (int i = 0; i < poolSize; i++) {
-            WorkerThread thread = pool[i];
-            if (thread.getSubState() == WorkerThread.WORKERTHREAD_BLOCKED ) {
-                counter++;
-            }
-        }
-        return (counter * 100) / poolSize;
-    }
-
     public int getBusyPercentage () {
-        int counter = 0;
-        for (int i = 0; i < poolSize; i++) {
-            WorkerThread thread = pool[i];
-            if (thread.getSubState() == WorkerThread.WORKERTHREAD_BUSY) {
-                counter++;
-            }
-        }
-        return (counter * 100) / poolSize;
+        return (pool.getActiveCount() * 100) / poolSize;
     }
 
     public int getIdlePercentage ( ) {
-        int counter = 0;
-        for (int i = 0; i < poolSize; i++) {
-            WorkerThread thread = pool[i];
-            if (thread.getSubState() == WorkerThread.WORKERTHREAD_IDLE ) {
-                counter++;
-            }
-        }
-        return (counter * 100) / poolSize;
+    	return ((poolSize - pool.getActiveCount()) * 100) / poolSize;
     }
 
     /**
      * Causes all worker threads to die.
      */
     public void stopAll() {
-        for (int i = 0; i < pool.length; i++) {
-            WorkerThread thread = pool[i];
-            thread.stopRunning();
-        }
+    	//pool.shutdown();
+		try {
+			pool.awaitTermination(0L, TimeUnit.MILLISECONDS);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
     }
 
     /**

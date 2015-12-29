@@ -16,19 +16,19 @@ import java.util.List;
  *
  * $Id: RuleSetImpl.java,v 1.9 2003/04/03 16:24:59 vanrogu Exp $
  *
- * @author Günther Van Roey
+ * @author Gï¿½nther Van Roey
  */
 public class RuleSetImpl implements Ruleset {
 
     protected int type;
     protected Ruleset generalRules;
-    protected List localRules;
+    protected List<Rule> localRules;
 
-    public RuleSetImpl(int type, List rules) {
+    public RuleSetImpl(int type, List<Rule> rules) {
         this(type, null, rules);
     }
 
-    public RuleSetImpl(int type, Ruleset generalRules, List rules) {
+    public RuleSetImpl(int type, Ruleset generalRules, List<Rule> rules) {
         this.type = type;
         this.generalRules = generalRules;
         this.localRules = rules;
@@ -45,7 +45,7 @@ public class RuleSetImpl implements Ruleset {
 
         if (decision.isVetoable()) {
 
-            Rule[] rules = (Rule[]) localRules.toArray(new Rule[localRules.size()]);
+            Rule[] rules = localRules.toArray(new Rule[localRules.size()]);
             for (int i = 0; i < rules.length; i++) {
                 Rule rule = rules[i];
                 Decision lastDecision = rule.apply(context, site, url);

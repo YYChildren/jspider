@@ -12,7 +12,7 @@ import java.util.StringTokenizer;
  *
  * $Id: CookieUtil.java,v 1.8 2003/04/08 18:44:15 vanrogu Exp $
  *
- * @author Günther Van Roey
+ * @author Gï¿½nther Van Roey
  */
 public class CookieUtil {
 
@@ -25,7 +25,7 @@ public class CookieUtil {
     }
 
     protected String[] getCookieStrings(URLConnection connection) {
-        ArrayList arrayList = new ArrayList();
+        ArrayList<String> arrayList = new ArrayList<String>();
 
         String headerKey = null;
         String headerValue = null;

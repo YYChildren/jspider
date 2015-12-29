@@ -15,13 +15,13 @@ class DecisionDAOImpl implements DecisionDAOSPI {
 
     protected StorageSPI storage;
 
-    protected Map spiderDecisions;
-    protected Map parseDecisions;
+    protected Map<Integer, DecisionInternal> spiderDecisions;
+    protected Map<Integer, DecisionInternal> parseDecisions;
 
     public DecisionDAOImpl ( StorageSPI storage ) {
         this.storage = storage;
-        this.spiderDecisions = new HashMap ( );
-        this.parseDecisions = new HashMap ( );
+        this.spiderDecisions = new HashMap<Integer, DecisionInternal> ( );
+        this.parseDecisions = new HashMap<Integer, DecisionInternal> ( );
     }
 
     public void saveSpiderDecision(ResourceInternal resource, DecisionInternal decision) {

@@ -19,17 +19,17 @@ class CookieDAOImpl implements CookieDAOSPI {
 
     protected StorageSPI storage;
     protected DBUtil dbUtil;
-    protected Map cookies;
+    //protected Map cookies;
 
     public CookieDAOImpl ( StorageSPI storage, DBUtil dbUtil ) {
         this.log = LogFactory.getLog(CookieDAO.class);
         this.storage = storage;
         this.dbUtil = dbUtil;
-        this.cookies = new HashMap ( );
+        //this.cookies = new HashMap ( );
     }
 
     public Cookie[] find(int id) {
-        ArrayList al = new ArrayList ( );
+        ArrayList<Cookie> al = new ArrayList<Cookie> ( );
         Statement st = null;
         ResultSet rs = null;
         try {
@@ -45,7 +45,7 @@ class CookieDAOImpl implements CookieDAOSPI {
             dbUtil.safeClose(rs, log);
             dbUtil.safeClose(st, log);
         }
-        return (Cookie[]) al.toArray(new Cookie[al.size()]);
+        return al.toArray(new Cookie[al.size()]);
     }
 
     public void save(int id, Cookie[] cookies) {
@@ -62,10 +62,10 @@ class CookieDAOImpl implements CookieDAOSPI {
                 rs.next();
                 int count = rs.getInt("count");
                 if ( count == 0 ) {
-                    st = connection.createStatement();
+                    //st = connection.createStatement();
                     st.executeUpdate("insert into jspider_cookie ( site, name, value, path, expires, domain ) values ( '" + id + "', '" + cookie.getName() + "', '" + cookie.getValue() + "', '"+  cookie.getPath() + "', '" + cookie.getExpires() + "', '" + cookie.getDomain() + "')");
                 } else {
-                    st = connection.createStatement();
+                    //st = connection.createStatement();
                     st.executeUpdate("update jspider_cookie set value='" + cookie.getValue() + "', path='" + cookie.getPath() + "', domain='"+  cookie.getDomain() + "', expires='" + cookie.getExpires() + "' where site='" + id + "' and name='" + cookie.getName() + "'");
                 }
             } catch (SQLException e) {

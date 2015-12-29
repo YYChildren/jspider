@@ -22,12 +22,12 @@ public class MaxResourcesPerSiteRule extends BaseRuleImpl {
     public static final String MAX = "max";
 
     protected int max;
-    protected Map counters;
+    protected Map<URL, Integer> counters;
 
     public MaxResourcesPerSiteRule ( PropertySet config ) {
         Log log = LogFactory.getLog(MaxResourcesPerSiteRule.class);
         max = config.getInteger(MaxResourcesPerSiteRule.MAX, 0);
-        this.counters = new HashMap ( );
+        this.counters = new HashMap<URL, Integer> ( );
         log.info("maximum resources per site set to " + max );
     }
 

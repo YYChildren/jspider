@@ -3,5 +3,6 @@
  */
 package net.javacoding.jspider.core.exception;
 
+@SuppressWarnings("serial")
 public class TaskAssignmentException extends Exception {
 }

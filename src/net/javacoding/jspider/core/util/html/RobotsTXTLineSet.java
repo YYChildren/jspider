@@ -61,7 +61,7 @@ public class RobotsTXTLineSet {
     }
 
     private static RobotsTXTLine[] parseRules ( BufferedReader br ) throws IOException {
-        ArrayList al = new ArrayList();
+        ArrayList<RobotsTXTLine> al = new ArrayList<RobotsTXTLine>();
         String line = br.readLine();
         while (line != null && (line.toLowerCase().indexOf(USER_AGENT) == -1)) {
             RobotsTXTLine robotsTXTline = RobotsTXTLine.parse(line);
@@ -70,7 +70,7 @@ public class RobotsTXTLineSet {
             }
             line = br.readLine();
         }
-        return (RobotsTXTLine[]) al.toArray(new RobotsTXTLine[al.size()]);
+        return al.toArray(new RobotsTXTLine[al.size()]);
     }
 
 }

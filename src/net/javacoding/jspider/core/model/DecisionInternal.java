@@ -11,13 +11,13 @@ import java.util.ArrayList;
  *
  * $Id: DecisionInternal.java,v 1.1 2003/03/09 09:25:22 vanrogu Exp $
  *
- * @author Günther Van Roey
+ * @author Gï¿½nther Van Roey
  */
 public class DecisionInternal implements Decision {
 
     protected int type;
     protected String comment;
-    protected ArrayList history;
+    protected ArrayList<DecisionStep> history;
 
     public DecisionInternal() {
         this(Decision.RULE_DONTCARE);
@@ -30,7 +30,7 @@ public class DecisionInternal implements Decision {
     public DecisionInternal(int type, String comment) {
         this.type = type;
         this.comment = comment;
-        this.history = new ArrayList();
+        this.history = new ArrayList<DecisionStep>();
     }
 
     public int getDecision() {
@@ -65,7 +65,7 @@ public class DecisionInternal implements Decision {
     }
 
     public DecisionStep[] getSteps() {
-        return (DecisionStep[])history.toArray(new DecisionStep[history.size()]);
+        return history.toArray(new DecisionStep[history.size()]);
     }
 
     public String toString() {

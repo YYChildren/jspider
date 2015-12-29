@@ -17,7 +17,8 @@ public class MappedPropertySet implements PropertySet {
         return delegate.getString(prefix + "." + name, defaultValue);
     }
 
-    public Class getClass(String name, Class defaultValue) {
+    @SuppressWarnings("rawtypes")
+	public Class getClass(String name, Class defaultValue) {
         return delegate.getClass(prefix + "." + name, defaultValue);
     }
 

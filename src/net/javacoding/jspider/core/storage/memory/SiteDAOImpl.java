@@ -14,13 +14,13 @@ import java.util.Map;
 class SiteDAOImpl implements SiteDAOSPI {
 
     protected StorageSPI storage;
-    protected Map byURL;
-    protected Map byId;
+    protected Map<URL, SiteInternal> byURL;
+    protected Map<Integer, SiteInternal> byId;
 
     public SiteDAOImpl ( StorageSPI storage ) {
         this.storage = storage;
-        this.byURL = new HashMap ( );
-        this.byId = new HashMap ( );
+        this.byURL = new HashMap<URL, SiteInternal> ( );
+        this.byId = new HashMap<Integer, SiteInternal> ( );
     }
 
     public SiteInternal find(int id) {

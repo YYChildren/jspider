@@ -5,7 +5,6 @@ import net.javacoding.jspider.api.model.Decision;
 import net.javacoding.jspider.api.model.Site;
 import net.javacoding.jspider.core.SpiderContext;
 import net.javacoding.jspider.core.model.DecisionInternal;
-import net.javacoding.jspider.core.model.SiteInternal;
 import net.javacoding.jspider.core.util.URLUtil;
 import net.javacoding.jspider.core.util.html.RobotsTXTLine;
 import net.javacoding.jspider.core.util.html.RobotsTXTLineSet;
@@ -23,7 +22,7 @@ import java.net.URL;
  *
  * $Id: RobotsTXTRule.java,v 1.13 2003/03/28 17:26:28 vanrogu Exp $
  *
- * @author Günther Van Roey
+ * @author Gï¿½nther Van Roey
  */
 public class RobotsTXTRule extends BaseRuleImpl {
 

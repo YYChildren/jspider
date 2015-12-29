@@ -29,11 +29,11 @@ public class StatusBasedFileWriterPlugin implements Plugin, EventVisitor {
 
     protected Log log;
 
-    protected HashMap fileWriters;
+    protected HashMap<Integer, PrintWriter> fileWriters;
 
     public StatusBasedFileWriterPlugin ( ) {
         log = LogFactory.getLog ( StatusBasedFileWriterPlugin.class );
-        fileWriters = new HashMap ( );
+        fileWriters = new HashMap<Integer, PrintWriter> ( );
         log.info("initialized." );
     }
 
@@ -73,8 +73,8 @@ public class StatusBasedFileWriterPlugin implements Plugin, EventVisitor {
     }
 
     public void visit(SpideringStoppedEvent event) {
-        Collection printWriters = fileWriters.values();
-        Iterator it = printWriters.iterator();
+        Collection<PrintWriter> printWriters = fileWriters.values();
+        Iterator<PrintWriter> it = printWriters.iterator();
         while ( it.hasNext() ) {
             PrintWriter pw = (PrintWriter)it.next();
             pw.close();

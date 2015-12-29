@@ -18,8 +18,8 @@ public class OverridingJSpiderConfiguration implements JSpiderConfiguration {
     protected PropertySet pluginsConfiguration;
     protected PropertySet defaultSiteConfiguration;
     protected PropertySet baseSiteConfiguration;
-    protected Map pluginConfiguration;
-    protected Map siteConfiguration;
+    protected Map<String, PropertySet> pluginConfiguration;
+    protected Map<?, ?> siteConfiguration;
     protected File defaultOutputFolder;
 
     public OverridingJSpiderConfiguration ( JSpiderConfiguration config ) {
@@ -28,8 +28,8 @@ public class OverridingJSpiderConfiguration implements JSpiderConfiguration {
         pluginsConfiguration = new OverridingPropertySet(config.getPluginsConfiguration());
         defaultSiteConfiguration = new OverridingPropertySet(config.getDefaultSiteConfiguration());
         baseSiteConfiguration = new OverridingPropertySet(config.getBaseSiteConfiguration());
-        pluginConfiguration = new HashMap ( );
-        siteConfiguration = new HashMap ( );
+        pluginConfiguration = new HashMap<String, PropertySet> ( );
+        siteConfiguration = new HashMap<Object, Object> ( );
         defaultOutputFolder = new File ( System.getProperty("jspider.home") + File.separator + "output" );
     }
 

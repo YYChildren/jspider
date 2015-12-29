@@ -12,27 +12,27 @@ import java.util.*;
  *
  * $Id: SchedulerImpl.java,v 1.17 2003/04/25 21:29:04 vanrogu Exp $
  *
- * @author  Günther Van Roey
+ * @author  Gï¿½nther Van Roey
  */
 public class SchedulerImpl implements Scheduler {
 
     /** List of fetch tasks to be carried out. */
-    protected List fetchTasks;
+    protected List<WorkerTask> fetchTasks;
 
     /** List of thinker tasks to be carried out. */
-    protected List thinkerTasks;
+    protected List<WorkerTask> thinkerTasks;
 
     /** Set of tasks that have been assigned. */
-    protected Set assignedSpiderTasks;
-    protected Set assignedThinkerTasks;
+    protected Set<WorkerTask> assignedSpiderTasks;
+    protected Set<WorkerTask> assignedThinkerTasks;
 
     protected int spiderTasksDone;
     protected int thinkerTasksDone;
 
-    protected Map blocked;
+    protected Map<URL, ArrayList<DecideOnSpideringTask>> blocked;
 
     int blockedCount = 0;
-
+    
     public int getBlockedCount( ) {
         return blockedCount;
     }
@@ -70,17 +70,17 @@ public class SchedulerImpl implements Scheduler {
      * Public constructor?
      */
     public SchedulerImpl() {
-        fetchTasks = new ArrayList();
-        thinkerTasks = new ArrayList();
-        assignedThinkerTasks = new HashSet();
-        assignedSpiderTasks = new HashSet();
-        blocked = new HashMap();
+        fetchTasks = new ArrayList<WorkerTask>();
+        thinkerTasks = new ArrayList<WorkerTask>();
+        assignedThinkerTasks = new HashSet<WorkerTask>();
+        assignedSpiderTasks = new HashSet<WorkerTask>();
+        blocked = new HashMap<URL, ArrayList<DecideOnSpideringTask>>();
     }
 
     public void block(URL siteURL, DecideOnSpideringTask task) {
-        ArrayList al = (ArrayList)blocked.get(siteURL);
+    	ArrayList<DecideOnSpideringTask> al = blocked.get(siteURL);
         if ( al == null ) {
-            al = new ArrayList();
+            al = new ArrayList<DecideOnSpideringTask>();
             blocked.put(siteURL, al);
         }
         int before = al.size();
@@ -92,12 +92,12 @@ public class SchedulerImpl implements Scheduler {
     }
 
     public DecideOnSpideringTask[] unblock(URL siteURL) {
-        ArrayList al = (ArrayList)blocked.remove(siteURL);
+        ArrayList<DecideOnSpideringTask> al = blocked.remove(siteURL);
         if ( al == null ) {
             return new DecideOnSpideringTask[0];
         } else {
           blockedCount-=al.size();
-          return (DecideOnSpideringTask[]) al.toArray(new DecideOnSpideringTask[al.size()]);
+          return al.toArray(new DecideOnSpideringTask[al.size()]);
         }
     }
 

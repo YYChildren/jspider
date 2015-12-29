@@ -14,21 +14,21 @@ class FolderDAOImpl implements FolderDAOSPI {
 
     protected StorageSPI storage;
 
-    protected Map parents;
-    protected Map children;
-    protected Map byId;
-    protected Map siteRoots;
+    protected Map<FolderInternal, FolderInternal> parents;
+    protected Map<FolderInternal, Set<FolderInternal>> children;
+    protected Map<Integer, FolderInternal> byId;
+    protected Map<Integer, Set<FolderInternal>> siteRoots;
 
     public FolderDAOImpl ( StorageSPI storage ) {
         this.storage = storage;
-        this.parents = new HashMap();
-        this.children = new HashMap();
-        this.byId = new HashMap();
-        this.siteRoots = new HashMap();
+        this.parents = new HashMap<FolderInternal, FolderInternal>();
+        this.children = new HashMap<FolderInternal, Set<FolderInternal>>();
+        this.byId = new HashMap<Integer, FolderInternal>();
+        this.siteRoots = new HashMap<Integer, Set<FolderInternal>>();
     }
 
     public FolderInternal[] findSubFolders(FolderInternal folder) {
-        Set folders = (Set) children.get(folder);
+        Set<FolderInternal> folders = children.get(folder);
         if ( folders == null ) {
             return new FolderInternal[0];
         } else {
@@ -37,7 +37,7 @@ class FolderDAOImpl implements FolderDAOSPI {
     }
 
     public FolderInternal[] findSiteRootFolders(SiteInternal site) {
-        Set rootFolders = (Set) siteRoots.get(new Integer(site.getId()));
+        Set<FolderInternal> rootFolders = siteRoots.get(new Integer(site.getId()));
         if ( rootFolders == null ) {
             return new FolderInternal[0];
         } else {
@@ -50,9 +50,9 @@ class FolderDAOImpl implements FolderDAOSPI {
         byId.put(new Integer(id), folder);
         parents.put(folder, parent);
 
-        Set set = (Set) children.get(parent);
+        Set<FolderInternal> set = (Set<FolderInternal>) children.get(parent);
         if ( set == null ) {
-            set = new HashSet();
+            set = new HashSet<FolderInternal>();
             children.put(parent,set);
         }
         set.add(folder);
@@ -62,9 +62,9 @@ class FolderDAOImpl implements FolderDAOSPI {
 
     public FolderInternal createFolder(int id, SiteInternal site, String name) {
         FolderInternal folder = new FolderInternal ( storage, id, 0, name, site.getId() );
-        Set roots = (Set) siteRoots.get(new Integer(site.getId()));
+        Set<FolderInternal> roots = (Set<FolderInternal>) siteRoots.get(new Integer(site.getId()));
         if (roots == null){
-            roots = new HashSet();
+            roots = new HashSet<FolderInternal>();
             siteRoots.put(new Integer(site.getId()), roots);
         }
         roots.add(folder);

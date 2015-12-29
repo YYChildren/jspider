@@ -327,7 +327,7 @@ public class RobotsTXTTest extends TestCase {
     }
 
 
-    protected void testEventCount ( Class eventClass, int expectedCount  ) {
+    protected void testEventCount ( Class<?> eventClass, int expectedCount  ) {
         assertEquals(eventClass.getName(), expectedCount, sink.getEventCount(eventClass));
     }
 

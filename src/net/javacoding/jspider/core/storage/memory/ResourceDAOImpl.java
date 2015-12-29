@@ -1,5 +1,8 @@
 package net.javacoding.jspider.core.storage.memory;
 
+import net.javacoding.jspider.api.model.FetchedResource;
+import net.javacoding.jspider.api.model.Folder;
+import net.javacoding.jspider.api.model.Resource;
 import net.javacoding.jspider.core.event.impl.*;
 import net.javacoding.jspider.core.model.*;
 import net.javacoding.jspider.core.storage.spi.ResourceDAOSPI;
@@ -17,39 +20,39 @@ class ResourceDAOImpl implements ResourceDAOSPI {
 
     protected StorageSPI storage;
 
-    protected Map knownURLs;
-    protected Map byId;
+    protected Map<URL, ResourceInternal> knownURLs;
+    protected Map<Integer, ResourceInternal> byId;
 
-    protected Set spideredResources; /* urls visited by a spider, but not yet parsed */
+    //protected Set<?> spideredResources; /* urls visited by a spider, but not yet parsed */
 
-    protected Set ignoredForFetchingResources; /* urls ignored because of rule decisions */
-    protected Set ignoredForParsingResources; /* urls ignored because non-HTML */
-    protected Set forbiddenResources; /* forbidden urls */
-    protected Set fetchErrorResources; /* urls that could not be visited by the spider */
-    protected Set parseErrorResources; /* resources that could not be parsed correctly */
-    protected Set parsedResources; /* urls that were spidered AND interpreted */
+    protected Set<URL> ignoredForFetchingResources; /* urls ignored because of rule decisions */
+    protected Set<URL> ignoredForParsingResources; /* urls ignored because non-HTML */
+    protected Set<URL> forbiddenResources; /* forbidden urls */
+    protected Set<URL> fetchErrorResources; /* urls that could not be visited by the spider */
+    protected Set<URL> parseErrorResources; /* resources that could not be parsed correctly */
+    protected Set<ResourceInternal> parsedResources; /* urls that were spidered AND interpreted */
 
-    protected Map referers;
-    protected Map referees;
+    protected Map<URL, Map<URL, ResourceReferenceInternal>> referers;
+    protected Map<URL, Map<URL, ResourceReferenceInternal>> referees;
 
-    protected Map byFolder;
-    protected Map rootResources;
+    protected Map<Folder, Set<ResourceInternal>> byFolder;
+    protected Map<URL, Set<ResourceInternal>> rootResources;
 
     public ResourceDAOImpl(StorageSPI storage) {
         this.storage = storage;
-        spideredResources = new HashSet();
-        ignoredForFetchingResources = new HashSet();
-        ignoredForParsingResources = new HashSet();
-        forbiddenResources = new HashSet();
-        fetchErrorResources = new HashSet();
-        parseErrorResources = new HashSet();
-        parsedResources = new HashSet();
-        knownURLs = new HashMap();
-        this.byId = new HashMap();
-        this.referees = new HashMap();
-        this.referers = new HashMap();
-        this.byFolder = new HashMap();
-        this.rootResources = new HashMap();
+        //spideredResources = new HashSet<Object>();
+        ignoredForFetchingResources = new HashSet<URL>();
+        ignoredForParsingResources = new HashSet<URL>();
+        forbiddenResources = new HashSet<URL>();
+        fetchErrorResources = new HashSet<URL>();
+        parseErrorResources = new HashSet<URL>();
+        parsedResources = new HashSet<ResourceInternal>();
+        knownURLs = new HashMap<URL, ResourceInternal>();
+        this.byId = new HashMap<Integer, ResourceInternal>();
+        this.referees = new HashMap<URL, Map<URL, ResourceReferenceInternal>>();
+        this.referers = new HashMap<URL, Map<URL, ResourceReferenceInternal>>();
+        this.byFolder = new HashMap<Folder, Set<ResourceInternal>>();
+        this.rootResources = new HashMap<URL, Set<ResourceInternal>>();
     }
 
     public void create(int id, ResourceInternal resource) {
@@ -58,16 +61,16 @@ class ResourceDAOImpl implements ResourceDAOSPI {
             byId.put(new Integer(id), resource);
 
             if (resource.getFolder() == null) {
-                Set set = (Set) rootResources.get(URLUtil.getSiteURL(url));
+                Set<ResourceInternal> set = rootResources.get(URLUtil.getSiteURL(url));
                 if (set == null) {
-                    set = new HashSet();
+                    set = new HashSet<ResourceInternal>();
                     rootResources.put(URLUtil.getSiteURL(url), set);
                 }
                 set.add(resource);
             } else {
-                Set set = (Set) byFolder.get(resource.getFolder());
+                Set<ResourceInternal> set = byFolder.get(resource.getFolder());
                 if (set == null) {
-                    set = new HashSet();
+                    set = new HashSet<ResourceInternal>();
                     byFolder.put(resource.getFolder(), set);
                 }
                 set.add(resource);
@@ -84,17 +87,17 @@ class ResourceDAOImpl implements ResourceDAOSPI {
     }
 
     public ResourceInternal[] findByFolder(FolderInternal folder) {
-        Set set = (Set) byFolder.get(folder);
+    	Set<ResourceInternal> set = byFolder.get(folder);
         if (set == null) {
             return new ResourceInternal[0];
         }
         return (ResourceInternal[]) set.toArray(new ResourceInternal[set.size()]);
     }
 
-    protected void storeRef(Map map, ResourceInternal key, ResourceInternal data, URL referer, URL referee) {
-        Map refmap = (Map) map.get(key.getURL());
+    protected void storeRef(Map<URL, Map<URL, ResourceReferenceInternal>> map, ResourceInternal key, ResourceInternal data, URL referer, URL referee) {
+        Map<URL, ResourceReferenceInternal> refmap = map.get(key.getURL());
         if (refmap == null) {
-            refmap = new HashMap();
+            refmap = new HashMap<URL, ResourceReferenceInternal>();
             map.put(key.getURL(), refmap);
         }
         ResourceReferenceInternal rri = (ResourceReferenceInternal) refmap.get(data.getURL());
@@ -111,7 +114,7 @@ class ResourceDAOImpl implements ResourceDAOSPI {
 
     public ResourceInternal[] getRefereringResources(ResourceInternal resource) {
         ResourceReferenceInternal[] refs = getIncomingReferences(resource);
-        ArrayList al = new ArrayList();
+        ArrayList<FetchedResource> al = new ArrayList<FetchedResource>();
         for (int i = 0; i < refs.length; i++) {
             ResourceReferenceInternal ref = refs[i];
             al.add(ref.getReferer());
@@ -120,7 +123,7 @@ class ResourceDAOImpl implements ResourceDAOSPI {
     }
 
     public ResourceReferenceInternal[] getOutgoingReferences(ResourceInternal resource) {
-        Map map = (Map) referees.get(resource.getURL());
+    	Map<URL, ResourceReferenceInternal> map = referees.get(resource.getURL());
         if (map == null) {
             return new ResourceReferenceInternal[0];
         } else {
@@ -129,7 +132,7 @@ class ResourceDAOImpl implements ResourceDAOSPI {
     }
 
     public ResourceReferenceInternal[] getIncomingReferences(ResourceInternal resource) {
-        Map map = (Map) referers.get(resource.getURL());
+    	Map<URL, ResourceReferenceInternal> map = referers.get(resource.getURL());
         if (map == null) {
             return new ResourceReferenceInternal[0];
         } else {
@@ -139,7 +142,7 @@ class ResourceDAOImpl implements ResourceDAOSPI {
 
     public ResourceInternal[] getReferencedResources(ResourceInternal resource) {
         ResourceReferenceInternal[] refs = getOutgoingReferences(resource);
-        ArrayList al = new ArrayList();
+        ArrayList<Resource> al = new ArrayList<Resource>();
         for (int i = 0; i < refs.length; i++) {
             ResourceReferenceInternal ref = refs[i];
             al.add(ref.getReferee());
@@ -148,8 +151,8 @@ class ResourceDAOImpl implements ResourceDAOSPI {
     }
 
     public ResourceInternal[] getBySite(SiteInternal site) {
-        ArrayList al = new ArrayList();
-        Iterator it = knownURLs.keySet().iterator();
+        ArrayList<ResourceInternal> al = new ArrayList<ResourceInternal>();
+        Iterator<URL> it = knownURLs.keySet().iterator();
         while (it.hasNext()) {
             URL url = (URL) it.next();
             URL siteURL = URLUtil.getSiteURL(url);
@@ -161,7 +164,7 @@ class ResourceDAOImpl implements ResourceDAOSPI {
     }
 
     public ResourceInternal[] getRootResources(SiteInternal site) {
-        Set set = (Set) rootResources.get(site.getURL());
+    	Set<ResourceInternal> set = rootResources.get(site.getURL());
         if ( set == null ) {
             return new ResourceInternal[0];
         } else {

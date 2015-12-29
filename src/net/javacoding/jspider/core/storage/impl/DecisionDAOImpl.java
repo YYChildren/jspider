@@ -1,7 +1,6 @@
 package net.javacoding.jspider.core.storage.impl;
 
 import net.javacoding.jspider.core.storage.DecisionDAO;
-import net.javacoding.jspider.core.storage.Storage;
 import net.javacoding.jspider.core.storage.spi.DecisionDAOSPI;
 import net.javacoding.jspider.core.storage.spi.StorageSPI;
 import net.javacoding.jspider.core.logging.Log;

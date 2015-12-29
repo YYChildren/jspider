@@ -1,6 +1,5 @@
 package net.javacoding.jspider.core.storage.spi;
 
-import net.javacoding.jspider.core.storage.EMailAddressDAO;
 import net.javacoding.jspider.core.model.*;
 
 /**

@@ -3,6 +3,7 @@
  */
 package net.javacoding.jspider.core.exception;
 
+@SuppressWarnings("serial")
 public class TaskSchedulerException extends Exception {
 
     public TaskSchedulerException() {

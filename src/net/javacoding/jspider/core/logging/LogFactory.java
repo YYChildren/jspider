@@ -15,7 +15,7 @@ public class LogFactory {
         {"net.javacoding.jspider.", ""}
     };
 
-    public static Map loggers = new HashMap ( );
+    public static Map<String, Log> loggers = new HashMap<String, Log> ( );
     public static LogFactory instance;
 
     protected LogProvider provider;
@@ -24,7 +24,7 @@ public class LogFactory {
     protected LogFactory ( ) {
         PropertySet props = ConfigurationFactory.getConfiguration().getJSpiderConfiguration();
         PropertySet logProps = new MappedPropertySet ( ConfigConstants.CONFIG_LOG, props);
-        Class providerClass = logProps.getClass(ConfigConstants.CONFIG_LOG_PROVIDER, SystemOutLogProvider.class);
+        Class<?> providerClass = logProps.getClass(ConfigConstants.CONFIG_LOG_PROVIDER, SystemOutLogProvider.class);
         try {
             provider = (LogProvider) providerClass.newInstance();
         } catch (InstantiationException e) {
@@ -41,7 +41,7 @@ public class LogFactory {
         return instance;
     }
 
-    public static synchronized Log getLog ( Class category ) {
+    public static synchronized Log getLog ( Class<?> category ) {
         return getLog ( category.getName() );
     }
 

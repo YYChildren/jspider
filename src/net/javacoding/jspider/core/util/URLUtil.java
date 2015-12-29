@@ -10,7 +10,7 @@ import java.util.StringTokenizer;
  *
  * $Id: URLUtil.java,v 1.13 2003/04/29 17:53:49 vanrogu Exp $
  *
- * @author Günther Van Roey
+ * @author Gï¿½nther Van Roey
  */
 public class URLUtil {
 
@@ -194,7 +194,7 @@ public class URLUtil {
      */
     public static String[] getFolderNames(URL url) {
         url = normalize(url);
-        ArrayList al = new ArrayList();
+        ArrayList<String> al = new ArrayList<String>();
 
         String path = url.getPath();
         if (isFileSpecified(url)) {
@@ -205,7 +205,7 @@ public class URLUtil {
         while (st.hasMoreTokens()) {
             al.add(st.nextToken());
         }
-        return (String[]) al.toArray(new String[al.size()]);
+        return al.toArray(new String[al.size()]);
     }
 
     /**

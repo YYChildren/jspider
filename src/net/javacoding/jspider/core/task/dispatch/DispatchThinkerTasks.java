@@ -12,7 +12,7 @@ import net.javacoding.jspider.core.threading.WorkerThreadPool;
  *
  * $Id: DispatchThinkerTasks.java,v 1.6 2003/03/27 17:44:19 vanrogu Exp $
  *
- * @author Günther Van Roey
+ * @author Gï¿½nther Van Roey
  */
 public class DispatchThinkerTasks extends BaseDispatchTaskImpl {
 
@@ -21,7 +21,7 @@ public class DispatchThinkerTasks extends BaseDispatchTaskImpl {
     protected SpiderContext context;
 
     public DispatchThinkerTasks(WorkerThreadPool thinkers, SpiderContext context) {
-        super(context);
+    	super(context);
         this.thinkers = thinkers;
         this.agent = context.getAgent();
         this.context = context;

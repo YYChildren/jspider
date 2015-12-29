@@ -7,7 +7,7 @@ import net.javacoding.jspider.mockobjects.util.Counter;
 /**
  * $Id: CountTask.java,v 1.5 2003/04/09 17:08:15 vanrogu Exp $
  */
-public class CountTask implements WorkerTask {
+public class CountTask extends WorkerTask {
 
     protected Counter counter;
 

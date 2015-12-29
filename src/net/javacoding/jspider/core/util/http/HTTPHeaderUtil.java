@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class HTTPHeaderUtil {
 
     public static HTTPHeader[] getHeaders ( URLConnection connection ) {
-        ArrayList arrayList = new ArrayList( );
+        ArrayList<HTTPHeader> arrayList = new ArrayList<HTTPHeader>( );
 
         String headerKey = null;
         String headerValue = null;

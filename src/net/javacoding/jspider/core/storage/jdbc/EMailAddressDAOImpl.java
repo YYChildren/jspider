@@ -37,17 +37,19 @@ class EMailAddressDAOImpl implements EMailAddressDAOSPI {
             rs.next();
             int count = rs.getInt("count");
             if (count == 0) {
-                st = connection.createStatement();
+                //st = connection.createStatement();
                 st.executeUpdate("insert into jspider_email_address ( address ) values ( '" + address.getAddress() + "' )");
-                st = connection.createStatement();
+                //st = connection.createStatement();
                 ResultSet rs2 = st.executeQuery("select id from jspider_email_address where address = '" + address.getAddress() + "'");
                 rs2.next();
                 address.setId(rs2.getInt("id"));
+                dbUtil.safeClose(rs2, log);
             }
+            dbUtil.safeClose(rs, log);
 
             rs = st.executeQuery("select count(*) as count from jspider_email_address, jspider_email_address_reference where jspider_email_address_reference.resource=" + resource.getId() + " and jspider_email_address_reference.address = jspider_email_address.id and jspider_email_address.id = " + address.getId());
             rs.next();
-            st = connection.createStatement();
+            //st = connection.createStatement();
             if ( rs.getInt("count") == 0 ) {
                 st.executeUpdate("insert into jspider_email_address_reference ( resource, address, count ) values ( " + resource.getId() + "," + address.getId() + ", 1 )");
             } else {
@@ -82,7 +84,7 @@ class EMailAddressDAOImpl implements EMailAddressDAOSPI {
     }
 
     public EMailAddressInternal[] findByResource(ResourceInternal resource) {
-        ArrayList al = new ArrayList();
+        ArrayList<EMailAddressInternal> al = new ArrayList<EMailAddressInternal>();
         Statement st = null;
         ResultSet rs = null;
         try {
@@ -102,7 +104,7 @@ class EMailAddressDAOImpl implements EMailAddressDAOSPI {
     }
 
     public EMailAddressReferenceInternal[] findReferencesByResource(ResourceInternal resource) {
-        ArrayList al = new ArrayList();
+        ArrayList<EMailAddressReferenceInternal> al = new ArrayList<EMailAddressReferenceInternal>();
         Statement st = null;
         ResultSet rs = null;
         try {

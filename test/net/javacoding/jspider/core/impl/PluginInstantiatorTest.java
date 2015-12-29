@@ -28,7 +28,7 @@ public class PluginInstantiatorTest extends TestCase {
     }
 
     public void testDefaultConstructor ( ) {
-        Class pluginClass = TestPluginDefaultCtr.class;
+        Class<TestPluginDefaultCtr> pluginClass = TestPluginDefaultCtr.class;
         BaseTestPluginImpl p = (BaseTestPluginImpl)
                 instantiator.instantiate(pluginClass, "testPlugin", config);
 
@@ -39,7 +39,7 @@ public class PluginInstantiatorTest extends TestCase {
     }
 
     public void testNameConstructor ( ) {
-        Class pluginClass = TestPluginNameCtr.class;
+        Class<TestPluginNameCtr> pluginClass = TestPluginNameCtr.class;
         BaseTestPluginImpl p = (BaseTestPluginImpl)
                 instantiator.instantiate(pluginClass, "testPlugin", config);
 
@@ -50,7 +50,7 @@ public class PluginInstantiatorTest extends TestCase {
     }
 
     public void testConfigConstructor ( ) {
-        Class pluginClass = TestPluginConfigCtr.class;
+        Class<TestPluginConfigCtr> pluginClass = TestPluginConfigCtr.class;
         BaseTestPluginImpl p = (BaseTestPluginImpl)
                 instantiator.instantiate(pluginClass, "testPlugin", config);
 
@@ -61,7 +61,7 @@ public class PluginInstantiatorTest extends TestCase {
     }
 
     public void testNameConfigConstructor ( ) {
-        Class pluginClass = TestPluginNameConfigCtr.class;
+        Class<TestPluginNameConfigCtr> pluginClass = TestPluginNameConfigCtr.class;
         BaseTestPluginImpl p = (BaseTestPluginImpl)
                 instantiator.instantiate(pluginClass, "testPlugin", config);
 

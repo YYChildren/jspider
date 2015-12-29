@@ -11,7 +11,7 @@ public class ParametersFactory {
 
     public static Parameters createParameters(String[] args) {
         int skip = 2; // skip tool & url params
-        ArrayList params = new ArrayList();
+        ArrayList<String> params = new ArrayList<String>();
         for (int i = 0; i < args.length; i++) {
             String arg = args[i];
             if (!arg.startsWith("-")) {

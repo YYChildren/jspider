@@ -165,7 +165,7 @@ class SiteDAOImpl implements SiteDAOSPI {
     }
 
     public SiteInternal[] findAll() {
-        ArrayList al = new ArrayList();
+        ArrayList<SiteInternal> al = new ArrayList<SiteInternal>();
         Statement st = null;
         ResultSet rs = null;
         try {

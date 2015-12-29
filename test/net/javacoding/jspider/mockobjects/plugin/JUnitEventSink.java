@@ -14,7 +14,7 @@ public class JUnitEventSink implements EventSink {
     protected static JUnitEventSink instance;
     protected EventSink otherSink;
 
-    protected Map counters;
+    protected Map<Class<? extends JSpiderEvent>, Integer> counters;
 
     private JUnitEventSink ( ) {
         reset ( );
@@ -44,7 +44,7 @@ public class JUnitEventSink implements EventSink {
         }
     }
 
-    public int getEventCount ( Class eventClass ) {
+    public int getEventCount ( Class<?> eventClass ) {
         Integer count = (Integer)counters.get(eventClass);
         if ( count == null ) {
             return 0;
@@ -54,7 +54,7 @@ public class JUnitEventSink implements EventSink {
     }
 
     public void reset ( ) {
-      this.counters = new HashMap ( );
+      this.counters = new HashMap<Class<? extends JSpiderEvent>, Integer> ( );
       this.otherSink = null;
     }
 

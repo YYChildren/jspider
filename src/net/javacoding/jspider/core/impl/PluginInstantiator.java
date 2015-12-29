@@ -21,7 +21,7 @@ public class PluginInstantiator {
     }
 
 
-    public Plugin instantiate(Class pluginClass, String name, PropertySet config) {
+    public Plugin instantiate(Class<?> pluginClass, String name, PropertySet config) {
         Plugin plugin = null;
 
         try {
@@ -51,17 +51,11 @@ public class PluginInstantiator {
         return plugin;
     }
 
-    protected Plugin instantiateWithNameAndConfig(Class pluginClass, String name, PropertySet config) {
+	protected Plugin instantiateWithNameAndConfig(Class<?> pluginClass, String name, PropertySet config) {
         Plugin plugin = null;
         try {
-            Class[] paramClasses = new Class[2];
-            paramClasses[0] = String.class;
-            paramClasses[1] = PropertySet.class;
-            Object[] params = new Object[2];
-            params[0] = name;
-            params[1] = config;
-            Constructor constructor = pluginClass.getDeclaredConstructor(paramClasses);
-            plugin = (Plugin) constructor.newInstance(params);
+            Constructor<?> constructor = pluginClass.getDeclaredConstructor(String.class,PropertySet.class);
+            plugin = (Plugin) constructor.newInstance(name,config);
         } catch (NoSuchMethodException e) {
             log.debug("cannot instantiate module - constructor with name and PropertySet params not found", e);
         } catch (InstantiationException e) {
@@ -74,15 +68,11 @@ public class PluginInstantiator {
         return plugin;
     }
 
-    protected Plugin instantiateWithConfig(Class pluginClass, String name, PropertySet config) {
+    protected Plugin instantiateWithConfig(Class<?> pluginClass, String name, PropertySet config) {
         Plugin plugin = null;
         try {
-            Class[] paramClasses = new Class[1];
-            paramClasses[0] = PropertySet.class;
-            Object[] params = new Object[1];
-            params[0] = config;
-            Constructor constructor = pluginClass.getDeclaredConstructor(paramClasses);
-            plugin = (Plugin) constructor.newInstance(params);
+            Constructor<?> constructor = pluginClass.getDeclaredConstructor(PropertySet.class);
+            plugin = (Plugin) constructor.newInstance(config);
         } catch (NoSuchMethodException e) {
             log.debug("cannot instantiate module - constructor with PropertySet param not found", e);
         } catch (InstantiationException e) {
@@ -95,15 +85,11 @@ public class PluginInstantiator {
         return plugin;
     }
 
-    protected Plugin instantiateWithName(Class pluginClass, String name, PropertySet config) {
+    protected Plugin instantiateWithName(Class<?> pluginClass, String name, PropertySet config) {
         Plugin plugin = null;
         try {
-            Class[] paramClasses = new Class[1];
-            paramClasses[0] = String.class;
-            Object[] params = new Object[1];
-            params[0] = name;
-            Constructor constructor = pluginClass.getDeclaredConstructor(paramClasses);
-            plugin = (Plugin) constructor.newInstance(params);
+            Constructor<?> constructor = pluginClass.getDeclaredConstructor(String.class);
+            plugin = (Plugin) constructor.newInstance(name);
         } catch (NoSuchMethodException e) {
             log.debug("cannot instantiate module - constructor with name param not found", e);
         } catch (InstantiationException e) {

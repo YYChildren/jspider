@@ -5,8 +5,9 @@ package net.javacoding.jspider.core.storage.exception;
  *
  * $Id: InvalidStateForActionException.java,v 1.1 2002/11/20 17:26:04 vanrogu Exp $
  *
- * @author Günther Van Roey
+ * @author Gï¿½nther Van Roey
  */
+@SuppressWarnings("serial")
 public class InvalidStateForActionException extends RuntimeException {
 
     public InvalidStateForActionException() {

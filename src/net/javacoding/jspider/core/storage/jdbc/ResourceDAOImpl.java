@@ -68,7 +68,7 @@ class ResourceDAOImpl implements ResourceDAOSPI {
     }
 
     public ResourceInternal[] findAllResources() {
-        ArrayList al = new ArrayList();
+        ArrayList<ResourceInternal> al = new ArrayList<ResourceInternal>();
         Statement st = null;
         ResultSet rs = null;
         try {
@@ -88,7 +88,7 @@ class ResourceDAOImpl implements ResourceDAOSPI {
     }
 
     public ResourceInternal[] getRefereringResources(ResourceInternal resource) {
-        ArrayList al = new ArrayList();
+        ArrayList<ResourceInternal> al = new ArrayList<ResourceInternal>();
         Statement st = null;
         ResultSet rs = null;
         try {
@@ -108,7 +108,7 @@ class ResourceDAOImpl implements ResourceDAOSPI {
     }
 
     public ResourceReferenceInternal[] getOutgoingReferences(ResourceInternal resource) {
-        ArrayList al = new ArrayList();
+        ArrayList<ResourceReferenceInternal> al = new ArrayList<ResourceReferenceInternal>();
         Statement st = null;
         ResultSet rs = null;
         try {
@@ -128,7 +128,7 @@ class ResourceDAOImpl implements ResourceDAOSPI {
     }
 
     public ResourceReferenceInternal[] getIncomingReferences(ResourceInternal resource) {
-        ArrayList al = new ArrayList();
+        ArrayList<ResourceReferenceInternal> al = new ArrayList<ResourceReferenceInternal>();
         Statement st = null;
         ResultSet rs = null;
         try {
@@ -148,7 +148,7 @@ class ResourceDAOImpl implements ResourceDAOSPI {
     }
 
     public ResourceInternal[] getReferencedResources(ResourceInternal resource) {
-        ArrayList al = new ArrayList();
+        ArrayList<ResourceInternal> al = new ArrayList<ResourceInternal>();
         Statement st = null;
         ResultSet rs = null;
         try {
@@ -169,7 +169,7 @@ class ResourceDAOImpl implements ResourceDAOSPI {
 
 
     public ResourceInternal[] findByFolder(FolderInternal folder) {
-        ArrayList al = new ArrayList();
+        ArrayList<ResourceInternal> al = new ArrayList<ResourceInternal>();
         Statement st = null;
         ResultSet rs = null;
         try {
@@ -189,7 +189,7 @@ class ResourceDAOImpl implements ResourceDAOSPI {
     }
 
     public ResourceInternal[] getBySite(SiteInternal site) {
-        ArrayList al = new ArrayList();
+        ArrayList<ResourceInternal> al = new ArrayList<ResourceInternal>();
         Statement st = null;
         ResultSet rs = null;
         try {
@@ -209,7 +209,7 @@ class ResourceDAOImpl implements ResourceDAOSPI {
     }
 
     public ResourceInternal[] getRootResources(SiteInternal site) {
-        ArrayList al = new ArrayList();
+        ArrayList<ResourceInternal> al = new ArrayList<ResourceInternal>();
         Statement st = null;
         ResultSet rs = null;
         try {

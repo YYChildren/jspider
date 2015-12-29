@@ -79,7 +79,7 @@ public class EventDispatcherImpl implements EventDispatcher {
     }
 
     public void dispatch(JSpiderEvent event) {
-        boolean mustDispatch = false;
+        boolean mustDispatch = true;
         if (filter) {
             EventFilter eventFilter = spiderEventFilter;
             if (event.isFilterable()) {
@@ -96,15 +96,12 @@ public class EventDispatcherImpl implements EventDispatcher {
                     default:
                         eventFilter = spiderEventFilter;
                 }
-                if (eventFilter.filterEvent(event)) {
-                    mustDispatch = true;
+                if (!eventFilter.filterEvent(event)) {
+                    mustDispatch = false;
                 }
-            } else {
-                mustDispatch = true;
             }
-        } else {
-            mustDispatch = true;
-        }
+        } 
+        
         if (mustDispatch) {
             for (int i = 0; i < eventSinks.length; i++) {
                 EventSink sink = eventSinks[i];
