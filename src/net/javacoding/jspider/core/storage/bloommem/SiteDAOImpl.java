@@ -1,4 +1,4 @@
-package net.javacoding.jspider.core.storage.memory;
+package net.javacoding.jspider.core.storage.bloommem;
 
 import net.javacoding.jspider.core.storage.spi.SiteDAOSPI;
 import net.javacoding.jspider.core.storage.spi.StorageSPI;
@@ -19,28 +19,31 @@ class SiteDAOImpl implements SiteDAOSPI {
 
     public SiteDAOImpl ( StorageSPI storage ) {
         this.storage = storage;
-        this.byURL = new HashMap<URL, SiteInternal>();
-        this.byId = new HashMap<Integer, SiteInternal>();
+        this.byURL = new HashMap<URL, SiteInternal> ( );
+        this.byId = new HashMap<Integer, SiteInternal> ( );
     }
 
     public SiteInternal find(int id) {
-        return byId.get(new Integer(id));
+        return (SiteInternal)byId.get(new Integer(id));
     }
 
     public SiteInternal find(URL siteURL) {
-        return byURL.get(siteURL);
+        return (SiteInternal)byURL.get(siteURL);
     }
 
     public void create(int id, SiteInternal site) {
-    	save(id,site);
+        byURL.put(site.getURL(), site);
+        byId.put(new Integer(id), site);
     }
 
     public void save(int id, SiteInternal site) {
-        byURL.put(site.getURL(), site);
+        URL siteURL = site.getURL();
+        byURL.put(siteURL, site);
         byId.put(new Integer(id), site);
     }
 
     public SiteInternal[] findAll() {
         return (SiteInternal[]) byURL.values().toArray(new SiteInternal[byURL.size()]);
     }
+
 }

@@ -33,7 +33,7 @@ class ResourceDAOImpl implements ResourceDAO {
         this.folderCounter = 0;
     }
 
-    public Resource registerURL(URL url) {
+    public void registerURL(URL url) {
         FolderInternal folder = ensureFolders(url);
         int id = ++counter;
         ResourceInternal resource = spi.getResource(url);
@@ -46,7 +46,6 @@ class ResourceDAOImpl implements ResourceDAO {
                 spi.create(id, resource);
             }
         }
-        return resource;
     }
 
     public void registerURLReference(URL url, URL referer) {

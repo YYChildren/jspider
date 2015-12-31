@@ -1,4 +1,4 @@
-package net.javacoding.jspider.core.storage.memory;
+package net.javacoding.jspider.core.storage.bloommem;
 
 import net.javacoding.jspider.core.storage.spi.ContentDAOSPI;
 import net.javacoding.jspider.core.storage.spi.StorageSPI;
@@ -13,8 +13,8 @@ import java.util.HashMap;
  */
 class ContentDAOImpl implements ContentDAOSPI {
 
-	protected StorageSPI storage;
-	protected Map<Integer, byte[]> contents;
+    protected Map<Integer, byte[]> contents;
+    protected StorageSPI storage;
 
     public ContentDAOImpl ( StorageSPI storage ) {
         this.storage = storage;
@@ -23,7 +23,7 @@ class ContentDAOImpl implements ContentDAOSPI {
 
     public InputStream getInputStream(int id) {
         byte[] bytes = contents.get(new Integer(id));
-        return new ByteArrayInputStream(bytes);
+        return new ByteArrayInputStream ( bytes );
     }
 
     public void setBytes(int id, byte[] bytes) {

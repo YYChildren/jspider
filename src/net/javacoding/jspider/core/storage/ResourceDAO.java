@@ -11,7 +11,7 @@ import java.net.URL;
  */
 public interface ResourceDAO {
 
-    public Resource registerURL(URL url);
+    public void registerURL(URL url);
 
     public void registerURLReference (URL url, URL referer);
 

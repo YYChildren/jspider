@@ -56,13 +56,6 @@
   <!-- == Paths                                                           == -->
   <!-- ===================================================================== -->
 
-  <!-- XDoclet path (for 'to do' docs) -->
-  <path id="path.dependency.xdoclet">
-      <fileset dir="${folder.res.lib}/${dependency.xdoclet.version}">
-          <include name="${dependency.xdoclet.files}"/>
-      </fileset>
-  </path>
-
   <!-- Clover path -->
   <path id="path.dependency.clover">
       <fileset dir="${folder.res.lib}/${dependency.clover.version}">

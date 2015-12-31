@@ -1,12 +1,14 @@
 package net.javacoding.jspider;
 
+import java.nio.charset.Charset;
+
 
 /**
  * Interface with some constants we need.
  *
  * $Id: Constants.java,v 1.10 2003/04/10 16:19:03 vanrogu Exp $
  *
- * @author Günther Van Roey
+ * @author Gï¿½nther Van Roey
  */
 public interface Constants {
 
@@ -20,8 +22,8 @@ public interface Constants {
 
     /** Versionstring for this source. */
     public static final String BUILDTIMESTAMP = "@build.DSTAMP@";
-
-
+    
+    public static final Charset CHARSET = Charset.forName("UTF-8");
 
     /**
      * Useragent for this build.
