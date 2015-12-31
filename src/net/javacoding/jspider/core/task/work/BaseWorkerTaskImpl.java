@@ -14,11 +14,11 @@ import java.net.URL;
  *
  * $Id: BaseWorkerTaskImpl.java,v 1.4 2003/04/10 16:19:08 vanrogu Exp $
  *
- * @author Gï¿½nther Van Roey
+ * @author Günther Van Roey
  */
-public abstract class BaseWorkerTaskImpl  extends WorkerTask {
+public abstract class BaseWorkerTaskImpl implements WorkerTask {
 
-	protected Log log;
+    protected Log log;
     protected int type;
     protected SpiderContext context;
 
@@ -35,8 +35,8 @@ public abstract class BaseWorkerTaskImpl  extends WorkerTask {
     public int getType() {
         return type;
     }
-    
-	protected void notifyEvent(URL url, CoreEvent event) {
+
+    protected void notifyEvent(URL url, CoreEvent event) {
         if ( event == null ) {
             log.error("PANIC! event is null!");
             log.error("URL: " + url);

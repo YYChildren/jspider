@@ -1,18 +1,18 @@
 package net.javacoding.jspider.core.threading;
 
 import junit.framework.TestCase;
-/*import net.javacoding.jspider.core.task.WorkerTask;
+import net.javacoding.jspider.core.task.WorkerTask;
 import net.javacoding.jspider.core.util.config.ConfigurationFactory;
 import net.javacoding.jspider.mockobjects.*;
 
-import java.net.URL;*/
+import java.net.URL;
 
 /**
  * $Id: WorkerThreadTest.java,v 1.6 2003/04/09 17:08:14 vanrogu Exp $
  */
 public class WorkerThreadTest extends TestCase {
 
-    /*protected WorkerThread thread;
+    protected WorkerThread thread;
     protected WorkerThreadPool pool;
 
     public WorkerThreadTest ( ) {
@@ -159,5 +159,5 @@ public class WorkerThreadTest extends TestCase {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
-    }*/
+    }
 }

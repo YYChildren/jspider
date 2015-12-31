@@ -8,7 +8,7 @@ import net.javacoding.jspider.core.task.DispatcherTask;
  *
  * $Id: DispatcherThread.java,v 1.4 2003/02/02 15:30:21 vanrogu Exp $
  *
- * @author GÃ¼nther Van Roey
+ * @author Günther Van Roey
  */
 class DispatcherThread extends Thread {
 

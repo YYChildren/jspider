@@ -6,19 +6,23 @@ package net.javacoding.jspider.api.event.monitor;
 public class ThreadPoolMonitorEvent extends MonitorEvent {
 
     protected String name;
+    protected int occupationPct;
     protected int idlePct;
+    protected int blockedPct;
     protected int busyPct;
     protected int size;
 
-    public ThreadPoolMonitorEvent ( String name, int idlePct, int busyPct, int size ) {
+    public ThreadPoolMonitorEvent ( String name, int occupationPct, int idlePct, int blockedPct, int busyPct, int size ) {
         this.name = name;
+        this.occupationPct = occupationPct;
         this.idlePct = idlePct;
+        this.blockedPct = blockedPct;
         this.busyPct = busyPct;
         this.size = size;
     }
 
     public String toString() {
-        return "ThreadPool " + getName() + "% [idle: " + getIdlePct() + "%, blocked: " + "%, busy: " + getBusyPct() + "%], size: " + getSize();
+        return "ThreadPool " + getName() + " occupation:" + (getOccupationPct()) + "% [idle: " + getIdlePct() + "%, blocked: " + getBlockedPct() + "%, busy: " + getBusyPct() + "%], size: " + getSize();
     }
 
     public String getComment() {
@@ -29,8 +33,16 @@ public class ThreadPoolMonitorEvent extends MonitorEvent {
         return name;
     }
 
+    public int getOccupationPct() {
+        return occupationPct;
+    }
+
     public int getIdlePct() {
         return idlePct;
+    }
+
+    public int getBlockedPct() {
+        return blockedPct;
     }
 
     public int getBusyPct() {

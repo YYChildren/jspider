@@ -14,7 +14,7 @@ import net.javacoding.jspider.mockobjects.util.Counter;
  *
  * $Id: WorkerThreadPoolTest.java,v 1.11 2003/04/03 15:57:24 vanrogu Exp $
  *
- * @author  Gï¿½nther Van Roey
+ * @author  Günther Van Roey
  */
 public class WorkerThreadPoolTest extends TestCase {
 
@@ -65,18 +65,18 @@ public class WorkerThreadPoolTest extends TestCase {
     /**
      * Tests whether the occupation of a non-assigned thread pool equals zero.
      */
-    /*public void testWorkerThreadOccupation ( ) {
+    public void testWorkerThreadOccupation ( ) {
         WorkerThreadPool pool = new WorkerThreadPool ( "testPool", "testThread", POOL_SIZE );
         assertEquals("Created fresh pool, occupation is not 0", 0, pool.getOccupation());
         pool.stopAll();
-    }*/
+    }
 
     /**
      * Tests the dispatcher thread functionality.
      * Dispatch some tasks and see if all threads die smoothly in time and the
      * occupation of the pool is 0% afterwards.
      */
-    /*public void testDispatcherThread ( ) throws Exception {
+    public void testDispatcherThread ( ) throws Exception {
         WorkerThreadPool pool = new WorkerThreadPool ( "testPool", "testThread", POOL_SIZE );
         SpiderContext context = new SimpleSpiderContext();
         DispatcherTask dispatcherTask = new WaitTaskDispatcherTask ( pool, context, 10, 100 );
@@ -93,7 +93,7 @@ public class WorkerThreadPoolTest extends TestCase {
           }
         pool.stopAll();
         assertEquals("Finished jobs, threadPool occupation is not 0%", 0, pool.getOccupation());
-    }*/
+    }
 
     /**
      * Test method that tests the raw Thread Pool (without dispatcher).

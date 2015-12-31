@@ -43,7 +43,7 @@ public class PropertiesFilePropertySet implements PropertySet {
         return value;
     }
 
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
 	public Class getClass(String name, Class defaultValue) {
         String className = null;
         if ( defaultValue == null ) {

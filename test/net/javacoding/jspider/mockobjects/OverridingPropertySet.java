@@ -29,7 +29,7 @@ public class OverridingPropertySet implements PropertySet {
         }
     }
 
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings({ "rawtypes", "unchecked" })
 	public Class getClass(String name, Class defaultValue) {
         if ( overridden.containsKey(name) ) {
             return (Class)overridden.get(name);

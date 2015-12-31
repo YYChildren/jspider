@@ -458,28 +458,9 @@
              author="true"/>
   </target>
 
-  <!-- == Generate TO DO Docs ============================================== -->
-  <target name="generateTodoDocs">
-    <mkdir dir="${folder.stage.doc.todo}"/>
-    <taskdef
-       name="document"
-       classname="xdoclet.modules.doc.DocumentDocletTask"
-       classpathref="path.dependency.xdoclet"
-    />
-    <document destdir="${folder.stage.doc.todo}">
-      <fileset dir="${folder.stage.src.main}">
-        <include name="**/*.java"/>
-      </fileset>
-      <fileset dir="${folder.src.test}">
-        <include name="**/*.java"/>
-      </fileset>
-      <info header="TODO List" projectname="${jspider.version.string}" tag="todo"/>
-    </document>
-  </target>
-
   <!-- == Generate Full Docs =============================================== -->
   <target name="generateFullDocs"
-          depends="generateAPIDocs,generateJUnitDocs,generateTodoDocs">
+          depends="generateAPIDocs,generateJUnitDocs">
   </target>
 
 

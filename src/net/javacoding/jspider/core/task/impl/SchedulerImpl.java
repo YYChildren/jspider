@@ -32,7 +32,7 @@ public class SchedulerImpl implements Scheduler {
     protected Map<URL, ArrayList<DecideOnSpideringTask>> blocked;
 
     int blockedCount = 0;
-    
+
     public int getBlockedCount( ) {
         return blockedCount;
     }
@@ -78,7 +78,7 @@ public class SchedulerImpl implements Scheduler {
     }
 
     public void block(URL siteURL, DecideOnSpideringTask task) {
-    	ArrayList<DecideOnSpideringTask> al = blocked.get(siteURL);
+        ArrayList<DecideOnSpideringTask> al = (ArrayList<DecideOnSpideringTask>)blocked.get(siteURL);
         if ( al == null ) {
             al = new ArrayList<DecideOnSpideringTask>();
             blocked.put(siteURL, al);
@@ -92,12 +92,12 @@ public class SchedulerImpl implements Scheduler {
     }
 
     public DecideOnSpideringTask[] unblock(URL siteURL) {
-        ArrayList<DecideOnSpideringTask> al = blocked.remove(siteURL);
+        ArrayList<?> al = (ArrayList<?>)blocked.remove(siteURL);
         if ( al == null ) {
             return new DecideOnSpideringTask[0];
         } else {
           blockedCount-=al.size();
-          return al.toArray(new DecideOnSpideringTask[al.size()]);
+          return (DecideOnSpideringTask[]) al.toArray(new DecideOnSpideringTask[al.size()]);
         }
     }
 
